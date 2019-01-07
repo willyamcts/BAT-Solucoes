@@ -1,14 +1,9 @@
-REM 
-REM Descricao: Devido a falhas que ocorrem de comunicação com o scaner da impressora 
-REM HP Officejet Pro X476dw MFP, foi criado esse pequeno bat para verificar a 
-REM execucao dos softwares responsáveis pela execução do scan. Comandos gerados 
-REM utilizando o ProcessExplorer.
-
-
 @echo off
 
 set file=%0
-	
+set tmpFile = %tmp%\file.txt
+REM set nTask = 0
+
 call:verificaHPCommunicator
 
 pause
@@ -18,16 +13,49 @@ pause
 REM ########## ############ ############
 
 :verificaHPCommunicator
-	tasklist | find /i "HPNetworkCommunicatorCom"
+echo "Verificando HPC" > log
 
-	if %errorlevel% == 0 (
-		call:verificaAppScan
+	REM retorna quantidade de processos HPNetworkCommunicatorCom.
+	tasklist | find /i "HPNetworkCommunicatorCom." | findstr /r /n "^" | find /C ":" > %tmp%\file.txt
+	
+echo "verificado qtd de processos" >> log
+	
+	REM Atribui o conteudo do arquivo na variável nTask
+	for /f %%i in (%tmp%\file.txt) do set /a nTask = %%i
+	echo
+
+echo I = %%i >> log
+echo nTask: %nTask% >> log
+
+REM tasklist | find /i "HPNetworkCommunicatorCom." | findstr /r /n "^" | find /C ":"
+
+	REM Caso tenha mais de um processo é encerrado todos e inicia um único processo novamente
+	if %nTask% GTR 1 (
+		taskkill /f /im "HPNetworkCommunicatorCom.exe"
+		
+		REM Se finalizar um dos processos retorna 0
+		if not %errorlevel% == 0 (
+			REM echo ERRO = %errorlevel%
+			echo "Erro ao finalizar HPNetworkCommunicatorCom.exe, contate os suporte"
+			start http://meu.suporte.com.br
+		)
+		
+		pause
+		call:iniciaHPCommunicator	
 	) else (
-		call:iniciaHPCommunicator
+		call:verificaAppScan
 	)
+
+REM	if %errorlevel% == 0 (
+REM		call:verificaAppScan
+REM	) else (
+REM		call:iniciaHPCommunicator
+REM	)
 
 
 :iniciaHPCommunicator
+	echo
+echo "INICIANDO HPCOMMUNICATOR"
 	echo.
 	echo.
 	
@@ -35,9 +63,9 @@ REM ########## ############ ############
 	
 	echo       Iniciando HP Communicator, feche a janela
 	
-	"C:\Program Files\HP\HP Officejet Pro X476dw MFP\Bin\HPNetworkCommunicatorCom" -Embedding
+	("C:\Program Files\HP\HP Officejet Pro X476dw MFP\Bin\HPNetworkCommunicatorComa" -Embedding)
 
-	if %errorlevel% == 0 (
+	if %errorlevel% == 0 || %errorlevel% == 1 (
 		call:verificaAppScan
 	) else (
 		call:iniciaHPCommunicator
@@ -45,6 +73,8 @@ REM ########## ############ ############
 
 
 :verificaAppScan
+	echo
+echo "VERIFICANDO SCAN"
 	tasklist | find /i "ScanToPcActivationApp.exe"
 
 	if %errorlevel% == 0 (
@@ -55,6 +85,8 @@ REM ########## ############ ############
 
 
 :ativaAppScan
+	echo
+echo "Executando AppScan"
 	REM timeout 2 /nobreak
 	timeout 2
 
@@ -64,3 +96,4 @@ REM ########## ############ ############
 	echo     Iniciando App Scan, feche esta janela...
 	
 	"C:\Program Files\HP\HP Officejet Pro X476dw MFP\Bin\ScanToPCActivationApp.exe" -deviceID "CN455HJ07W:NW" -scfn "HP Officejet Pro X476dw MFP (NET)" -AutoStart 1 -installmode
+PAUSE 
