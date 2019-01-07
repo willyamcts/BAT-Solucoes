@@ -1,3 +1,12 @@
+REM 
+REM Data: 07/01/2019
+REM
+REM Autor: Willyam Castro
+REM
+REM Corrige erros básicos de comunicação com o scaner da impressora HP OficeJet Pro X476dw
+REM
+
+
 @echo off
 
 set file=%0
@@ -29,7 +38,7 @@ echo nTask: %nTask% >> log
 
 REM tasklist | find /i "HPNetworkCommunicatorCom." | findstr /r /n "^" | find /C ":"
 
-	REM Caso tenha mais de um processo é encerrado todos e inicia um único processo novamente
+	REM Se houver de um processo, todos são encerrados e um único processo é iniciado novamente
 	if %nTask% GTR 1 (
 		taskkill /f /im "HPNetworkCommunicatorCom.exe"
 		
