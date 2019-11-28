@@ -3,7 +3,7 @@
 REM 
 REM Data: 12/11/2019 (atualizado ***)
 REM
-REM Autor: 
+REM Autor: Willyam Castro
 REM
 REM Obtém contagem de páginas impressas e modelo do dispositivo, exportando para um TXT
 REM 
