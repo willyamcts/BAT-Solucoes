@@ -8,11 +8,21 @@ REM
 REM Obtém contagem de páginas impressas e modelo do dispositivo, exportando para um TXT
 REM 
 REM Requer instalação de Net-SNMP - http://www.net-snmp.org/
+REM Necessário alterar linha 40, "ip_impressoras.txt" pelo caminho completo do arquivo
+REM
 REM
 REM Melhoria: Fazer tratamento de erro e eliminar a criação de arquivos para concatenar strings
 REM             Não ocorre erro de dados inconsistentes pois os arquivos gerados são apagados a 
 REM              cada loop.
 REM
+REM
+REM Exemplo de conteúdo "necessário" para arquivo definido na linha 40:
+REM 192.168.0.60 - Impressora_da_sala
+REM 192.168.0.50 - Impressora_do_escritorio
+REM
+REM Exemplo do arquivo de saída:
+REM 192.168.0.60   -   Impressora_da_sala   -   HP Officejet Pro X476dw MFP    -   221396 
+REM 192.168.0.50   -   Impressora_do_escritorio   -   HP LaserJet P4014    -   194682 
 
 REM arquivo atual= %%"<"%~f0%%
 REM http://batchscript.blogspot.com/2012/12/aprenda-o-for-de-uma-vez-por-todas.html
