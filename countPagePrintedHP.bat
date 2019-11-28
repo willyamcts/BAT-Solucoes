@@ -31,12 +31,13 @@ goto:eof
 
 REM ============= // ======== Functions ========= // ==================
 
+REM Lê arquivo que contém HOSTNAME + IP da impressora
 :getFileAddress
 
 	for /f "Tokens=1,2 delims=-" %%a in (ip_impressoras.txt) do (
-		@echo %%b	%%a
+		echo %%b %TAB% %%a
 
-		call:getDataSNMP %%a		
+		call:getDataSNMP %%a
 	)	
 
 	goto:eof
@@ -58,12 +59,14 @@ REM Obtém dados via SNMP
 REM Cria arquivo de saída com dados úteis
 :outputFile
 
-	echo; echo "SAIDAS FINAIS: "
+	echo SAIDAS FINAIS: 
 
 	for /f "Tokens=3 delims=:"  %%b in (walk.txt) do (
 	
 		echo TOKEN:%%b
 	)
+	
+	del walk.txt
 	
 	goto:eof
 
