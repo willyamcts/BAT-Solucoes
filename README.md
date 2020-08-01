@@ -7,6 +7,8 @@ Pequenos batchs para solução de problemas do dia a dia.
 
 - [add_printers.bat](https://github.com/willyamcts/bat-solucoes/blob/master/add_printers.bat): Adiciona impressora local ou de rede (necessário driver instalado), basta @alterar o nome do computador (campo COMPUTERNAME) e o nome dado a impressora no computador que está comparilhando-a.
 
+- [bat-solucoes/backup_files.bat](https://github.com/willyamcts/bat-solucoes/tree/master/backup_files.bat): Faz backup de arquivos mantendo apenas arquivos dos últimos 30 dias no diretório de destino.
+
 - [check_file_exist.bat](https://github.com/willyamcts/bat-solucoes/blob/master/check_file_exist.bat): Verifica se um determinado arquivo existe. @ALTERAR variável "FILE"
 
 - [scan_HP_Pro_X476dw.bat](https://github.com/willyamcts/bat-solucoes/blob/master/scan_HP_Pro_X476dw.bat): Corrige falhas de comuicação entre a máquina e a impressora HP. Encerra todos os  processo de comunicação ou inicializa o mesmo se não estiver em execução. @Alterar linhas que contenham "HPNetworkCommunicatorCom" se a sua impressora não for a HP OficeJet Pro X476dw e o caminho absoluto para esse arquivo (que pode variar x64 e x32). Outra linha a ser editada é a 59 que abre o navegador em uma página da internet para o usuário abrir um chamado, indicando que o script não foi eficaz no caso em questão.
